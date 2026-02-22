@@ -1,0 +1,193 @@
+@import url('/legacy/styles.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Inter", "PingFang SC", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 1100px !important;
+  width: 100%;
+}
+
+.app-container {
+  width: min(1100px, calc(100vw - 40px)) !important;
+  margin: 80px auto 0 !important;
+  align-self: stretch;
+}
+
+.app-container > .card,
+.app-container > .filter-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.container > * {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.product-name span {
+  font-size: 28px !important;
+  font-weight: 300 !important;
+}
+
+.btn-base,
+.btn-main,
+.btn-copy,
+.conclusion-btn {
+  border-radius: var(--ui-card-radius) !important;
+}
+
+.ico-round {
+  border-radius: var(--ui-card-radius) !important;
+}
+
+.card,
+.task-block,
+.filter-container,
+.cross-sub-block,
+.table-container,
+.file-box,
+.custom-select,
+.filter-select,
+.filter-input,
+.filter-value-combobox,
+.display-toggle,
+.diff-btn-container,
+.cross-analysis-btn,
+.add-task-block {
+  border-radius: var(--ui-card-radius) !important;
+}
+
+.add-task-block {
+  border-radius: var(--ui-card-radius) !important;
+}
+
+.cross-table .freeze-col {
+  width: 280px !important;
+  min-width: 280px !important;
+  max-width: 280px !important;
+}
+
+.cross-table .freeze-col-2 {
+  left: 280px !important;
+}
+
+.custom-select,
+.filter-select,
+.filter-value-combobox {
+  background-color: #fff !important;
+}
+
+.custom-select option,
+.filter-select option,
+.filter-value-combobox option {
+  background-color: #fff !important;
+}
+
+.col-name,
+.cross-table .freeze-col {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.header-right-container {
+  justify-content: flex-end;
+  gap: 10px !important;
+}
+
+.task-block .analysis-title {
+  margin-bottom: 0 !important;
+}
+
+.task-block .header-controls {
+  margin-bottom: 10px;
+}
+
+.task-block .custom-select {
+  margin-bottom: 10px !important;
+}
+
+.table-container {
+  margin-top: 10px !important;
+}
+
+.smart-conclusion {
+  padding: 12px 0 0 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.conclusion-header {
+  margin-bottom: 8px !important;
+}
+
+.conclusion-btn {
+  min-width: 60px !important;
+  height: 28px !important;
+  font-size: 11px !important;
+}
+
+.filter-row .ico-round,
+.task-block .ico-round,
+.cross-sub-block .ico-round {
+  width: 26px !important;
+  height: 26px !important;
+}
+
+.display-toggle,
+.diff-btn-container {
+  height: 30px !important;
+}
+
+.display-toggle .toggle-btn,
+.diff-toggle,
+.diff-option,
+.bulb-btn {
+  font-size: 11px !important;
+}
+
+.cross-sub-block {
+  padding-top: 12px !important;
+}
+
+.add-task-block {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.file-summary-line {
+  position: relative;
+  margin-top: 12px;
+  font-size: 12px;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-summary-text {
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 34px;
+  box-sizing: border-box;
+}
+
+.file-clear-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}

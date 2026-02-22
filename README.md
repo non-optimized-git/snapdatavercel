@@ -1,38 +1,51 @@
 # Snapdata 数达
 
-当前采用“开发分文件 + 单文件发布”双轨结构，并启用依赖加载策略：`CDN 优先，本地 vendor 兜底`。
+当前项目以 `Vite + React + TypeScript + Tailwind` 为唯一运行主线。
 
-## 文件说明
+## 已实现模块（React）
 
-- `index.html`：开发入口（引用 `styles.css` / `bootstrap.js`）
-- `styles.css`：样式文件
-- `app.js`：业务逻辑
-- `bootstrap.js`：依赖加载器（先 CDN，失败后本地 vendor）
-- `vendor/`：本地兜底依赖目录
-- `index.single.html`：打包后的单文件版本（便于分发）
-- `scripts/build-single.sh`：将分文件打包为单文件
+- Excel 上传与解析（`.xlsx/.xls`）
+- 多条件筛选（AND）
+- 分析工作区（多题目）
+- 每个题目支持多个交叉分析块
+- 主分析：频数/百分比、排序、小数位、均值、拖拽排序
+- 交叉分析：TopN 差异高亮、Z 检验灯泡、智能结论
+- 交叉块删除按钮与交叉表右边缘对齐（圆形 `×`）
+- 复制：主分析表、交叉分析表、智能结论
+- 导出：
+  - 一键批量导出所有题目与交叉块
 
-## 依赖加载策略
+## 运行
 
-运行时依赖：
-- `SheetJS` (`XLSX`)
-- `Sortable.js`
+```bash
+cd "/Users/yuanyi.li/Documents/New project"
+npm install
+npm run dev
+```
 
-加载顺序：
-1. 优先从 CDN 加载
-2. CDN 失败时自动尝试本地文件：
-   - `vendor/xlsx.full.min.js`
-   - `vendor/Sortable.min.js`
-3. 两者都失败时，页面顶部显示错误提示
+默认地址：`http://127.0.0.1:5173/`
 
-## 本地使用
+## 构建
 
-1. 开发调试：直接打开 `index.html`
-2. 生成单文件发布版：执行 `./scripts/build-single.sh`
-3. 分发时使用 `index.single.html`
+```bash
+npm run build
+npm run preview
+```
 
-## 离线建议
+## 单文件离线版（可双击打开）
 
-如果希望在无网络环境稳定运行，请提前把 vendor 依赖放到本地：
-- `vendor/xlsx.full.min.js`
-- `vendor/Sortable.min.js`
+```bash
+npm run build:offline
+```
+
+会在项目根目录生成：
+
+- `index.offline.html`：单文件离线入口（可直接双击打开使用）
+
+## 目录
+
+- `index.html`：Vite 入口
+- `index.offline.html`：离线单文件入口
+- `src/`：React 源码
+- `public/`：静态资源
+- `package.json`：依赖与脚本
