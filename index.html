@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Snapdata 数达</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#54473A">
+    <!-- 引入科技感字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Manrope:wght@400;600;700;800&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="design-atlas">
+
+<!-- 横幅版产品介绍 -->
+<div class="product-banner">
+    <div class="banner-content">
+        <h1 class="product-name">Snapdata<span>数达</span></h1>
+        <p class="tagline">Data analysis, in a snap</p>
+    </div>
+</div>
+
+<div id="custom-modal-overlay">
+    <div class="modal-card">
+        <div class="modal-title" id="modal-title">确认操作</div>
+        <div class="modal-desc" id="modal-desc">您确定要执行此操作吗？</div>
+        <div style="display: flex; justify-content: center; gap: 12px;">
+            <button class="btn-base" id="modal-cancel">取消</button>
+            <button class="btn-base" style="color:var(--muji-red); border-color:var(--muji-red)" id="modal-confirm">确定</button>
+        </div>
+    </div>
+</div>
+
+<div class="offline-indicator" id="offlineIndicator">离线模式</div>
+
+<div class="container">
+    <div class="card">
+        <span class="section-title">数据上传</span>
+        <div class="file-box" id="fileBox">
+            <div class="file-info" id="fileInfo">点击或拖拽 Excel 文件到此区域</div>
+            <div class="drag-hint">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                支持 .xlsx, .xls 格式
+            </div>
+            <div class="progress-container" id="progressContainer" style="display:none;">
+                <div class="progress-label">
+                    <span id="progressText">正在读取文件...</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            <div class="file-stats" id="fileStats"></div>
+        </div>
+        <input type="file" id="upload" accept=".xlsx, .xls" style="display:none" />
+    </div>
+    
+    <div id="filterSection" style="display:none;">
+        <div class="filter-container">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:15px;">
+                <span class="section-title">数据筛选</span>
+                <button class="btn-base" onclick="addFilterRow()" style="font-size:11px; padding:5px 10px; height:28px;">+ 添加筛选条件</button>
+            </div>
+            <div id="filterConditions"></div>
+            <div class="filter-actions">
+                <button class="btn-base" onclick="applyFilters()" style="height:32px;">应用筛选</button>
+                <button class="btn-base" onclick="clearFilters()" style="height:32px;">清除筛选</button>
+                <span class="filter-status" id="filterStatus"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="workspace" style="display:none;">
+        <div id="taskList"></div>
+        
+        <div class="add-task-block" onclick="addTask()">
+            <div class="add-task-content">
+                <div class="add-task-icon">+</div>
+                <div class="add-task-text">添加分析题目</div>
+            </div>
+        </div>
+        
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 80px; padding-top: 20px; border-top: 1px solid var(--muji-border);">
+            <button class="btn-main" onclick="downloadAllTablesWithName()">下载以上所有表格</button>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    created by Yuanyi & Gemini & Deepseek & Codex
+    <span id="onlineStatus" class="online-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-text" id="statusText">在线</span>
+    </span>
+    <span class="version-info">v0.5</span>
+</div>
+
+<script src="bootstrap.js"></script>
+</body>
+</html>
