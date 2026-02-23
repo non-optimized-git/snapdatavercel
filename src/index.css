@@ -39,6 +39,12 @@ body {
   font-weight: 300 !important;
 }
 
+.product-name,
+.tagline {
+  width: min(360px, calc(100vw - 40px)) !important;
+  box-sizing: border-box;
+}
+
 .btn-base,
 .btn-main,
 .btn-copy,
@@ -91,6 +97,14 @@ body {
 .filter-select option,
 .filter-value-combobox option {
   background-color: #fff !important;
+}
+
+.filter-value-combobox {
+  height: 32px !important;
+  box-sizing: border-box !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 32px !important;
 }
 
 .col-name,

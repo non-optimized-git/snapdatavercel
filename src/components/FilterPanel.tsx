@@ -87,7 +87,7 @@ export default function FilterPanel() {
                 value={filter.value}
                 onChange={(event) => updateFilter(filter.id, { value: event.target.value })}
                 placeholder="Filter value"
-                className="filter-input"
+                className="filter-value-combobox"
                 style={{ minWidth: 140, flex: 1 }}
               />
               <datalist id={`filter-values-${filter.id}`}>

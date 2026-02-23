@@ -184,6 +184,7 @@ export default function UploadPanel() {
         accept=".xlsx,.xls"
         onChange={onFileChange}
         className="hidden"
+        style={{ display: 'none' }}
       />
     </section>
   );
