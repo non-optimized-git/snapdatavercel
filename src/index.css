@@ -205,3 +205,29 @@ body {
   top: 50%;
   transform: translateY(-50%);
 }
+
+@media (max-width: 768px) {
+  .product-banner {
+    padding: 15px 0 !important;
+  }
+
+  .banner-content {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+  }
+
+  .product-name {
+    font-size: 28px !important;
+  }
+
+  .product-name span {
+    font-size: 24px !important;
+  }
+
+  .tagline {
+    font-size: 15px !important;
+    letter-spacing: 1.5px !important;
+    margin-top: 5px !important;
+  }
+}
