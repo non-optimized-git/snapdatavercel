@@ -1,9 +1,0 @@
-{
-  "name": "Snapdata 数达",
-  "short_name": "Snapdata",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#F7F3F0",
-  "theme_color": "#8C2721",
-  "description": "本地优先的 Excel 数据分析工具"
-}

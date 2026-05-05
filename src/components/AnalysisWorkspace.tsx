@@ -376,50 +376,59 @@ export default function AnalysisWorkspace() {
     const defaultName = `snapdata_all_${Date.now()}.xlsx`;
     const fileName = window.prompt('File name', defaultName) || defaultName;
 
-    const wb = XLSX.utils.book_new();
-    const usedNames = new Set<string>();
+    const allRows: Array<Array<string | number>> = [];
 
     tasks.forEach((task, taskIndex) => {
       const main = buildMainResult(activeRows, task.mainColumn, task.displayMode, task.sortType, task.customOrder);
-      const mainAoa: Array<Array<string | number>> = [];
-      mainAoa.push([`Task ${taskIndex + 1} - Main - ${task.mainColumn}`]);
-      mainAoa.push(['Option', task.displayMode === 'percent' ? '%' : 'Count']);
-      mainAoa.push(['Base (n)', main.base]);
-      main.rows.forEach((r) => {
-        mainAoa.push([r.name, task.displayMode === 'percent' ? Number(r.percent.toFixed(task.precision)) : r.count]);
-      });
-      if (main.mean !== null) mainAoa.push(['Mean', Number(main.mean.toFixed(2))]);
 
-      const wsMain = XLSX.utils.aoa_to_sheet(mainAoa);
-      XLSX.utils.book_append_sheet(wb, wsMain, toSheetName(`T${taskIndex + 1}_Main`, usedNames));
+      allRows.push([`Task ${taskIndex + 1} - ${task.mainColumn}`]);
+      allRows.push(['Option', 'Count', '%']);
+      allRows.push(['Base (n)', main.base, '']);
+      main.rows.forEach((r) => {
+        allRows.push([r.name, r.count, Number(r.percent.toFixed(task.precision))]);
+      });
+      if (main.mean !== null) allRows.push(['Mean', Number(main.mean.toFixed(2)), '']);
+      allRows.push([]);
 
       task.crosses.forEach((cross, crossIndex) => {
         if (!cross.crossColumn || cross.crossColumn === task.mainColumn) return;
         const c = buildCrossResult(activeRows, task.mainColumn, cross.crossColumn, main, task.displayMode);
-        const aoa: Array<Array<string | number>> = [];
-        aoa.push([`Task ${taskIndex + 1} - Cross ${crossIndex + 1} - ${task.mainColumn} x ${cross.crossColumn}`]);
-        aoa.push(['Option', 'Total', ...c.crossValues]);
-        aoa.push(['Base (n)', c.mainBase, ...c.crossValues.map((cv) => c.crossBase[cv] ?? 0)]);
+
+        allRows.push([`Task ${taskIndex + 1} - Cross ${crossIndex + 1} - ${task.mainColumn} × ${cross.crossColumn}`]);
+
+        const headerRow: Array<string | number> = ['Option', 'Total Count', 'Total %'];
+        c.crossValues.forEach((cv) => { headerRow.push(`${cv} Count`, `${cv} %`); });
+        allRows.push(headerRow);
+
+        const baseRow: Array<string | number> = ['Base (n)', c.mainBase, ''];
+        c.crossValues.forEach((cv) => { baseRow.push(c.crossBase[cv] ?? 0, ''); });
+        allRows.push(baseRow);
+
         c.rows.forEach((row) => {
-          aoa.push([
+          const dataRow: Array<string | number> = [
             row.option,
-            task.displayMode === 'percent' ? Number(row.totalPercent.toFixed(task.precision)) : row.totalCount,
-            ...c.crossValues.map((cv) =>
-              task.displayMode === 'percent'
-                ? Number((row.byCrossPercent[cv] ?? 0).toFixed(task.precision))
-                : row.byCross[cv] ?? 0
-            ),
-          ]);
+            row.totalCount,
+            Number(row.totalPercent.toFixed(task.precision)),
+          ];
+          c.crossValues.forEach((cv) => {
+            dataRow.push(row.byCross[cv] ?? 0, Number((row.byCrossPercent[cv] ?? 0).toFixed(task.precision)));
+          });
+          allRows.push(dataRow);
         });
+
         if (c.totalMean !== null) {
-          aoa.push(['Mean', Number(c.totalMean.toFixed(2)), ...c.crossValues.map((cv) => Number((c.meanByCross[cv] ?? 0).toFixed(2)))]);
+          const meanRow: Array<string | number> = ['Mean', Number(c.totalMean.toFixed(2)), ''];
+          c.crossValues.forEach((cv) => { meanRow.push(Number((c.meanByCross[cv] ?? 0).toFixed(2)), ''); });
+          allRows.push(meanRow);
         }
 
-        const ws = XLSX.utils.aoa_to_sheet(aoa);
-        XLSX.utils.book_append_sheet(wb, ws, toSheetName(`T${taskIndex + 1}_C${crossIndex + 1}`, usedNames));
+        allRows.push([]);
       });
     });
 
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(allRows);
+    XLSX.utils.book_append_sheet(wb, ws, 'All');
     XLSX.writeFile(wb, fileName);
   };
 
